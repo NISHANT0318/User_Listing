@@ -19,10 +19,11 @@ export default function UserList() {
 
 
   const filteredUser = useMemo(() => {
-    return combinedUsers.filter(user =>
-      typeof user.name === "string" && user.name.toLowerCase().includes(search.toLowerCase()) ||
-      typeof user.email === "string" && user.email.toLowerCase().includes(search.toLowerCase())
-    )
+    return combinedUsers.filter(
+      (user) =>
+     ( typeof user.name === "string" && user.name.toLowerCase().includes(search.toLowerCase())) ||
+      (typeof user.email === "string" && user.email.toLowerCase().includes(search.toLowerCase())
+    ))
   }, [search, combinedUsers])
 
 
@@ -45,12 +46,17 @@ export default function UserList() {
         </Link>
       </div>
 
+
+    {filteredUser.length > 0 ? (
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {filteredUser.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}
       </div>
-
+    ):(
+      <p className="text-center text-gray-500 mt-10 text-lg">User Not Found </p>
+    )}
     </div>
   )
 }
