@@ -6,9 +6,10 @@ import { useSelector } from "react-redux"
 import { useMemo, useState } from "react"
 
 export default function UserList() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading,isError } = useQuery({
     queryKey: ['users'],
-    queryFn: fetchUsers
+    queryFn: fetchUsers,
+    retry: false, 
   })
 
   const [search, setSearch] = useState("")
@@ -46,16 +47,30 @@ export default function UserList() {
         </Link>
       </div>
 
+      {isError && addedUsers.length === 0 && (
+        <p className="text-center text-red-500 mb-4">
+          Failed to load users from API.
+        </p>
+      )}
+
 
     {filteredUser.length > 0 ? (
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center gap-6">
         {filteredUser.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}
       </div>
     ):(
+      <>
+      {combinedUsers.length === 0 ? (
+            <p className="text-center text-gray-500 mt-10 text-lg">
+              No users exist. Please add new user.
+            </p>
+    ):(
       <p className="text-center text-gray-500 mt-10 text-lg">User Not Found </p>
+    )}
+    </>
     )}
     </div>
   )
