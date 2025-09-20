@@ -14,6 +14,8 @@ export default function UserDetails(){
     const {data:apiUser,isLoading}=useQuery({
         queryKey:["users",id],
         queryFn:()=> fetchUsersById(id),
+        staleTime: 5 * 60 * 1000,  
+    cacheTime: 30 * 60 * 1000,  
         enabled:!localUser
     })
 

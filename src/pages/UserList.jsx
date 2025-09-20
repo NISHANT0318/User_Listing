@@ -9,7 +9,9 @@ export default function UserList() {
   const { data, isLoading,isError } = useQuery({
     queryKey: ['users'],
     queryFn: fetchUsers,
-    retry: false, 
+    retry: false,
+    staleTime: 5 * 60 * 1000,   
+    cacheTime: 30 * 60 * 1000, 
   })
 
   const [search, setSearch] = useState("")
